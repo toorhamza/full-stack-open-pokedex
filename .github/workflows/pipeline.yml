@@ -41,3 +41,10 @@ jobs:
           healthcheck: https://${{secrets.HEROKU_APP_NAME}}.herokuapp.com/health
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.33.0
+        if: ${{ github.event_name == 'push' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACSESS_TOKEN }}
+          DEFAULT_BUMP: patch
